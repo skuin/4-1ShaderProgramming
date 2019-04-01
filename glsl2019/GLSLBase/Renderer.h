@@ -25,6 +25,7 @@ public:
 	void myTest();
 	void Lecture4();
 	void Lecture5();
+	void Lecture6();
 
 	void GenQuadsVBO(int count);
 
@@ -50,5 +51,7 @@ private:
 	//Shaders
 	GLuint m_SolidRectShader = 0;
 	GLuint m_SimpleVelShader = 0;
+	GLuint m_SinLineShader = 0;
+
 };
 

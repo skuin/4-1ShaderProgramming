@@ -25,6 +25,7 @@ void Renderer::Initialize(int windowSizeX, int windowSizeY)
 	//Load shaders
 	m_SolidRectShader = CompileShaders("./Shaders/SolidRect.vs", "./Shaders/SolidRect.fs");
 	m_SimpleVelShader = CompileShaders("./Shaders/SimpleVel.vs", "./Shaders/SimpleVel.fs");
+	m_SinLineShader = CompileShaders("./Shaders/SinLine.vs", "./Shaders/SinLine.fs");
 
 	//Create VBOs
 	//CreateVertexBufferObjects();
@@ -55,9 +56,12 @@ void Renderer::CreateVertexBufferObjects()
 		-1.f, 0.f, 0.f, 0.f, 1.f, 0.f, 1.f, 0.f, 0.f
 	};
 
+	
 	glGenBuffers(1, &m_VBOTriangle);
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBOTriangle);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(triangleVertex), triangleVertex, GL_STATIC_DRAW);
+
+	
 }
 
 //void Renderer::GenQuadsVBO(int count)
@@ -99,14 +103,19 @@ void Renderer::createRectParticles()
 	std::default_random_engine dre(rd());
 	std::uniform_real_distribution<> urd(-1.f, 1.f);
 	std::uniform_real_distribution<> vurd(-1.f, 1.f);
-	std::uniform_real_distribution<> eurd(0.f, 5.f);
+	std::uniform_real_distribution<> eurd(0.1f, 1.f);
+	std::uniform_real_distribution<> eurd2(0.1f, 0.5f);
+	std::uniform_real_distribution<> emitLifeUrd(0.f, 3.f);
 
-	const int particleNum = 1000;
+	const int particleNum = 100;
 	const double particleSize = 0.005;
 
-	float particles[particleNum][48];
+	bool randParticle = false;
 
-	m_VBOVertexCount = particleNum * 48;
+	float particles[particleNum][60];
+
+	m_VBOVertexCount = particleNum * 60;
+
 
 	// 파티클 100개
 	for (int i = 0; i < particleNum; ++i){
@@ -117,32 +126,44 @@ void Renderer::createRectParticles()
 		double yVel = vurd(dre);
 		double zVel = 0;
 
-		double emitTime = eurd(dre);
-		double lifeTime = eurd(dre) + 1;
+		double emitTime = emitLifeUrd(dre);
+		double lifeTime = emitLifeUrd(dre)+10;
+		
+		double width = eurd(dre);
+		double height = eurd2(dre);
 
-		// 버텍스 6개
+		if (!randParticle){
+			xPos = 0;
+			yPos = 0;
+		}
+
 		float particle[] = {
-			-particleSize + xPos, -particleSize + yPos, 0.f,
-			-particleSize + xVel,-particleSize + yVel, zVel,
-			emitTime, lifeTime,
-			-particleSize + xPos, particleSize + yPos, 0.f,
-			-particleSize + xVel, particleSize + yVel, zVel,
-			emitTime, lifeTime,
-			particleSize + xPos, particleSize + yPos, 0.f,	//Triangle1
-			particleSize + xVel, particleSize + yVel, zVel,
-			emitTime, lifeTime,
-			-particleSize + xPos, -particleSize + yPos, 0.f,
-			-particleSize + xVel, -particleSize + yVel, zVel,
-			emitTime, lifeTime,
-			particleSize + xPos, particleSize + yPos, 0.f,
-			particleSize + xVel, particleSize + yVel, zVel,
-			emitTime, lifeTime,
-			particleSize + xPos, -particleSize + yPos, 0.f,	//Triangle2
-			particleSize + xVel, -particleSize + yVel, zVel,
-			emitTime, lifeTime
+				-particleSize + xPos, -particleSize + yPos, 0.f,
+				-particleSize + xVel,-particleSize + yVel, zVel,
+				width, height, emitTime,lifeTime,
+				-particleSize + xPos, particleSize + yPos, 0.f,
+				-particleSize + xVel, particleSize + yVel, zVel,
+				width, height, emitTime,lifeTime,
+				particleSize + xPos, particleSize + yPos, 0.f,	//Triangle1
+				particleSize + xVel, particleSize + yVel, zVel,
+				width, height, emitTime,lifeTime,
+				-particleSize + xPos, -particleSize + yPos, 0.f,
+				-particleSize + xVel, -particleSize + yVel, zVel,
+				width, height, emitTime,lifeTime,
+				particleSize + xPos, particleSize + yPos, 0.f,
+				particleSize + xVel, particleSize + yVel, zVel,
+				width, height, emitTime,lifeTime,
+				particleSize + xPos, -particleSize + yPos, 0.f,	//Triangle2
+				particleSize + xVel, -particleSize + yVel, zVel,
+				width, height, emitTime,lifeTime
 		};
-		memcpy(&particles[i], particle, sizeof(float) * 48);
+		memcpy(&particles[i], particle, sizeof(float) * 60);
+		
 	}
+
+	GLuint vboID = 0;
+	// vCount = countQuad * vertices;
+	// id = vboID;
 
 	glGenBuffers(1, &m_VBOParticles);
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBOParticles);
@@ -422,7 +443,6 @@ void Renderer::myTest()
 	glDisableVertexAttribArray(attribPosition);
 }
 
-float g_Time = 0;
 
 //void Renderer::Lecture4()
 //{	
@@ -452,39 +472,74 @@ float g_Time = 0;
 //	glDisableVertexAttribArray(aVel);
 //}
 
-void Renderer::Lecture5()
-{
-	g_Time += 0.0005;
+//void Renderer::Lecture5()
+//{
+//	g_Time += 0.0005;
+//
+//	glUseProgram(m_SimpleVelShader);
+//
+//	// 유니폼을 넣어줘야 한다.
+//	GLuint uTime = glGetUniformLocation(m_SimpleVelShader, "u_Time");
+//	GLuint uRepeat = glGetUniformLocation(m_SimpleVelShader, "u_Repeat");
+//	glUniform1f(uTime, g_Time);
+//
+//
+//	glUseProgram(m_SimpleVelShader);
+//
+//	GLuint aPos = glGetAttribLocation(m_SimpleVelShader, "a_Position");
+//	GLuint aVel = glGetAttribLocation(m_SimpleVelShader, "a_Vel");
+//	GLuint aEmitLife = glGetAttribLocation(m_SimpleVelShader, "a_EmitLife");
+//
+//
+//	// glEnableVertexAttribArray(aPos); 안에 전달인자로 aPos를 넣는거 시험문제!
+//	glEnableVertexAttribArray(aPos);
+//	glEnableVertexAttribArray(aVel);
+//	glEnableVertexAttribArray(aEmitLife);
+//
+//	glBindBuffer(GL_ARRAY_BUFFER, m_VBOParticles);
+//	glVertexAttribPointer(aPos, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 8, 0);
+//	glVertexAttribPointer(aVel, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 8, (GLvoid*)(sizeof(float) * 3));
+//	glVertexAttribPointer(aEmitLife, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 8, (GLvoid*)(sizeof(float) * 6));
+//
+//
+//	glDrawArrays(GL_TRIANGLES, 0, m_VBOVertexCount);
+//
+//	glDisableVertexAttribArray(aPos);
+//	glDisableVertexAttribArray(aVel);
+//	glDisableVertexAttribArray(aEmitLife);
+//}
 
-	glUseProgram(m_SimpleVelShader);
+float g_Time = 0;
+
+void Renderer::Lecture6()
+{
+	g_Time += 0.001;
+
+	glUseProgram(m_SinLineShader);
 
 	// 유니폼을 넣어줘야 한다.
-	GLuint uTime = glGetUniformLocation(m_SimpleVelShader, "u_Time");
-	GLuint uRepeat = glGetUniformLocation(m_SimpleVelShader, "u_Repeat");
+	GLuint uTime = glGetUniformLocation(m_SinLineShader, "u_Time");
 	glUniform1f(uTime, g_Time);
 
+	glUseProgram(m_SinLineShader);
 
-	glUseProgram(m_SimpleVelShader);
-
-	GLuint aPos = glGetAttribLocation(m_SimpleVelShader, "a_Position");
-	GLuint aVel = glGetAttribLocation(m_SimpleVelShader, "a_Vel");
-	GLuint aEmitLife = glGetAttribLocation(m_SimpleVelShader, "a_EmitLife");
-
+	GLuint aPos = glGetAttribLocation(m_SinLineShader, "a_Position");
+	GLuint aTemp = glGetAttribLocation(m_SinLineShader, "a_Temp");
+	GLuint aEmitLife = glGetAttribLocation(m_SinLineShader, "a_EmitLife");
 
 	// glEnableVertexAttribArray(aPos); 안에 전달인자로 aPos를 넣는거 시험문제!
 	glEnableVertexAttribArray(aPos);
-	glEnableVertexAttribArray(aVel);
+	glEnableVertexAttribArray(aTemp);
 	glEnableVertexAttribArray(aEmitLife);
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBOParticles);
-	glVertexAttribPointer(aPos, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 8, 0);
-	glVertexAttribPointer(aVel, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 8, (GLvoid*)(sizeof(float) * 3));
-	glVertexAttribPointer(aEmitLife, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 8, (GLvoid*)(sizeof(float) * 6));
-
+	glVertexAttribPointer(aPos, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 10, 0);
+	glVertexAttribPointer(aTemp, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 10, (GLvoid*)(sizeof(float) * 6));
+	glVertexAttribPointer(aEmitLife, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 10, (GLvoid*)(sizeof(float) * 8));
 
 	glDrawArrays(GL_TRIANGLES, 0, m_VBOVertexCount);
 
 	glDisableVertexAttribArray(aPos);
-	glDisableVertexAttribArray(aVel);
+	glDisableVertexAttribArray(aTemp);
 	glDisableVertexAttribArray(aEmitLife);
 }
