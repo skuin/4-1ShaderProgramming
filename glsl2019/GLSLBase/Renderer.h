@@ -5,6 +5,7 @@
 #include <fstream>
 #include <iostream>
 #include <random>
+#include <chrono>
 
 #include "Dependencies\glew.h"
 #include "Dependencies\wglew.h"
@@ -23,11 +24,11 @@ public:
 	   
 	void Test();
 	void myTest();
-	void Lecture4();
-	void Lecture5();
-	void Lecture6();
-
-	void GenQuadsVBO(int count);
+	void myTest1();
+	void myTest4();
+	void lecture4();
+	void lecture5();
+	void practice5();
 
 private:
 	void Initialize(int windowSizeX, int windowSizeY);
@@ -35,7 +36,12 @@ private:
 	void AddShader(GLuint ShaderProgram, const char* pShaderText, GLenum ShaderType);
 	GLuint CompileShaders(char* filenameVS, char* filenameFS);
 	void CreateVertexBufferObjects();
+	void CreateVertexBufferObjectsWith4Element();
 	void createRectParticles();
+
+	void GenQuadsVBO(int quadCount, bool bRand, GLuint& id, GLuint& vertexCount);
+
+	void Renderer::CreateProxyGeometry();
 	unsigned char * Renderer::loadBMPRaw(const char * imagepath, unsigned int& outWidth, unsigned int& outHeight);
 
 	bool m_Initialized = false;
@@ -44,14 +50,20 @@ private:
 	unsigned int m_WindowSizeY = 0;
 
 	GLuint m_VBORect = 0;
+	GLuint m_VBORectColor = 0;
 	GLuint m_VBOTriangle = 0;
 	GLuint m_VBOParticles = 0;
-	unsigned int m_VBOVertexCount = 0;
+	GLuint m_VBO_GridMesh = 0;
+	GLuint m_VBO_GridMesh_Count = 0;
+	GLuint m_VBOQuads1 = 0;
 
-	//Shaders
+	GLuint particleVertexCount = 0;
+	GLuint m_VBOQuads_VertexCount1 = 0;
+
+	// Shaders
 	GLuint m_SolidRectShader = 0;
-	GLuint m_SimpleVelShader = 0;
-	GLuint m_SinLineShader = 0;
-
+	GLuint m_SimpleVal = 0;
+	GLuint m_Lecture3 = 0;
+	GLuint m_Practice5 = 0;
 };
 

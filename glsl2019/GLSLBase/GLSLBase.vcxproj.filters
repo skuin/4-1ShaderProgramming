@@ -35,16 +35,22 @@
     <None Include="Shaders\SolidRect.fs">
       <Filter>Shader</Filter>
     </None>
-    <None Include="Shaders\SimpleVel.fs">
+    <None Include="Shaders\SimpleVal.fs">
       <Filter>Shader</Filter>
     </None>
-    <None Include="Shaders\SimpleVel.vs">
+    <None Include="Shaders\SimpleVal.vs">
       <Filter>Shader</Filter>
     </None>
-    <None Include="Shaders\SinLine.fs">
+    <None Include="Shaders\lecture3.fs">
       <Filter>Shader</Filter>
     </None>
-    <None Include="Shaders\SinLine.vs">
+    <None Include="Shaders\lecture3.vs">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shaders\Practice5.vs">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shaders\Practice5.fs">
       <Filter>Shader</Filter>
     </None>
   </ItemGroup>
