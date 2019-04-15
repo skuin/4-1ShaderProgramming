@@ -29,6 +29,7 @@ public:
 	void lecture4();
 	void lecture5();
 	void practice5();
+	void Lecture7();
 
 private:
 	void Initialize(int windowSizeX, int windowSizeY);
@@ -65,5 +66,7 @@ private:
 	GLuint m_SimpleVal = 0;
 	GLuint m_Lecture3 = 0;
 	GLuint m_Practice5 = 0;
+	GLuint m_FSSandboxshader = 0;
+
 };
 

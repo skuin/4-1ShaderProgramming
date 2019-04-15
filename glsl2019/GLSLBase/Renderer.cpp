@@ -26,13 +26,14 @@ void Renderer::Initialize(int windowSizeX, int windowSizeY)
 	m_SimpleVal = CompileShaders("./Shaders/SimpleVal.vs", "./Shaders/SimpleVal.fs");
 	m_Lecture3 = CompileShaders("./Shaders/lecture3.vs", "./Shaders/lecture3.fs");
 	m_Practice5 = CompileShaders("./Shaders/Practice5.vs", "./Shaders/Practice5.fs");
-	
+	m_FSSandboxshader = CompileShaders("./Shaders/lecture7.vs", "./Shaders/lecture7.fs");
 	//Create VBOs
-	//CreateVertexBufferObjects();
+	CreateVertexBufferObjects();
+
 	//createRectParticles();
 	//CreateProxyGeometry();
 	//CreateVertexBufferObjectsWith4Element();
-	GenQuadsVBO(1000, false, m_VBOQuads1, m_VBOQuads_VertexCount1);
+	//GenQuadsVBO(1000, false, m_VBOQuads1, m_VBOQuads_VertexCount1);
 }
 
 void Renderer::CreateVertexBufferObjects()
@@ -40,8 +41,12 @@ void Renderer::CreateVertexBufferObjects()
 	float rect[]
 		=
 	{
-		-0.5, -0.5, 0.f, -0.5, 0.5, 0.f, 0.5, 0.5, 0.f, //Triangle1
-		-0.5, -0.5, 0.f,  0.5, 0.5, 0.f, 0.5, -0.5, 0.f, //Triangle2
+		-0.5, -0.5, 0.f,0.f,0.f,
+		-0.5, 0.5, 0.f,0.f,1.f,
+		0.5, 0.5, 0.f, 1.f, 1.f, //Triangle1
+		-0.5, -0.5, 0.f, 0.f, 0.f,
+		0.5, 0.5, 0.f, 1.f, 1.f,
+		0.5, -0.5, 0.f, 1.f, 0.f  //Triangle2
 	};
 
 	glGenBuffers(1, &m_VBORect);
@@ -652,7 +657,7 @@ void Renderer::lecture4()
 void Renderer::lecture5()
 {
 	static float time = 0.f;
-	time += 0.01f;
+	time += 100.f;
 
 	glUseProgram(m_Lecture3);
 
@@ -681,7 +686,7 @@ void Renderer::lecture5()
 void Renderer::practice5()
 {
 	static float time = 0.f;
-	time += 0.0001f;
+	time += 0.01f;
 
 	glUseProgram(m_Practice5);
 
@@ -723,4 +728,25 @@ void Renderer::practice5()
 	glDisableVertexAttribArray(aRatioAmp);
 	glDisableVertexAttribArray(aValue);
 	glDisableVertexAttribArray(aColor);
+}
+
+void Renderer::Lecture7()
+{
+	GLuint shader = m_FSSandboxshader;
+	glUseProgram(shader);
+
+	GLuint attribPosition = glGetAttribLocation(shader, "a_Position");
+	GLuint aUV = glGetAttribLocation(shader, "a_UV");
+
+	glEnableVertexAttribArray(attribPosition);
+	glEnableVertexAttribArray(aUV);
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBORect);
+	
+	glVertexAttribPointer(attribPosition, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 5, 0);
+	glVertexAttribPointer(aUV, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 5, (GLvoid*)(sizeof(float) * 3));
+
+	glDrawArrays(GL_TRIANGLES, 0, 6);
+
+	glDisableVertexAttribArray(attribPosition);
+	glDisableVertexAttribArray(aUV);
 }

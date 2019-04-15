@@ -53,6 +53,12 @@
     <None Include="Shaders\Practice5.fs">
       <Filter>Shader</Filter>
     </None>
+    <None Include="Shaders\lecture7.fs">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shaders\lecture7.vs">
+      <Filter>Shader</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
