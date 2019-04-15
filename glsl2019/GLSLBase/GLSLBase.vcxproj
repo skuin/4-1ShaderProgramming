@@ -173,16 +173,16 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Shaders\lecture3.fs" />
-    <None Include="Shaders\lecture3.vs" />
-    <None Include="Shaders\lecture7.fs" />
-    <None Include="Shaders\lecture7.vs" />
-    <None Include="Shaders\Practice5.fs" />
-    <None Include="Shaders\SimpleVal.fs" />
-    <None Include="Shaders\SimpleVal.vs" />
+    <None Include="Shaders\FillAll.fs" />
+    <None Include="Shaders\FillAll.vs" />
+    <None Include="Shaders\FSSandbox.fs" />
+    <None Include="Shaders\FSSandbox.vs" />
+    <None Include="Shaders\SimpleVel.fs" />
+    <None Include="Shaders\SimpleVel.vs" />
+    <None Include="Shaders\SinTrail.fs" />
+    <None Include="Shaders\SinTrail.vs" />
     <None Include="Shaders\SolidRect.fs" />
     <None Include="Shaders\SolidRect.vs" />
-    <None Include="Shaders\Practice5.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -17,24 +17,23 @@ but WITHOUT ANY WARRANTY.
 
 Renderer *g_Renderer = NULL;
 
-int g_WindowSizeX = 500;
-int g_WindowSizeY = 500;
+int g_WindowSizeX = 700;
+int g_WindowSizeY = 700;
 
 void RenderScene(void)
 {
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	g_Renderer->FillAll(0.2);
 
 	// Renderer Test
 	//g_Renderer->Test();
-	//g_Renderer->myTest();
-	//g_Renderer->myTest1();
-	//g_Renderer->myTest4();
-	//g_Renderer->lecture4();
-	//g_Renderer->lecture5();
-	//g_Renderer->practice5();
-	g_Renderer->Lecture7();
-
+	//g_Renderer->Lecture2();
+	//g_Renderer->Lecture3();
+	//g_Renderer->Lecture4();
+	//g_Renderer->Lecture5();
+	g_Renderer->Lecture6();
+	//g_Renderer->Lecture7();
 
 	glutSwapBuffers();
 }
