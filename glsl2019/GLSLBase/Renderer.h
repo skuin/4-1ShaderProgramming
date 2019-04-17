@@ -52,6 +52,9 @@ private:
 	GLuint m_VBOQuads1 = 0;
 	GLuint m_VBOQuads_VertexCount1 = 0;
 
+	GLuint m_VBOTextureRect = 0;
+
+
 	GLuint m_VBOGridMesh = 0;
 	int m_VBOGridMesh_Count = 0;
 
@@ -67,8 +70,11 @@ private:
 	GLuint m_Particle1Texture = 0;
 	GLuint m_Particle2Texture = 0;
 
+	GLuint m_TextureRectShader = 0;
+
 public:
 	void Lecture7();
 	void Lecture6();
+	void DrawTextureRect(GLuint tex);
 };
 
