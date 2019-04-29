@@ -7,6 +7,6 @@ out vec2 v_Tex;
 
 void main()
 {
-	v_Tex = a_Tex;
 	gl_Position = vec4(a_Position.xyz, 1);
+	v_Tex = a_Tex;
 }

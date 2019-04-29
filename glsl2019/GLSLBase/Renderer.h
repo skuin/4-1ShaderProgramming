@@ -36,6 +36,9 @@ private:
 	void GenQuadsVBO(int count, bool bRandPos, GLuint * id, GLuint * vCount);
 	void CreateGridMesh();
 
+	void CreateTexture();
+
+
 	unsigned char * Renderer::loadBMPRaw(const char * imagepath, unsigned int& outWidth, unsigned int& outHeight);
 
 	bool m_Initialized = false;
@@ -69,8 +72,12 @@ private:
 	GLuint m_ParticleTexture = 0;
 	GLuint m_Particle1Texture = 0;
 	GLuint m_Particle2Texture = 0;
+	
+	GLuint m_CatTexture = 0;
 
 	GLuint m_TextureRectShader = 0;
+
+	GLuint m_CheckboardTexture = 0;
 
 public:
 	void Lecture7();
