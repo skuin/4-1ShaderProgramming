@@ -74,6 +74,7 @@ private:
 	GLuint m_Particle2Texture = 0;
 	
 	GLuint m_CatTexture = 0;
+	GLuint m_RGBTexture = 0;
 
 	GLuint m_TextureRectShader = 0;
 

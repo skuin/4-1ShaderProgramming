@@ -31,6 +31,7 @@ void Renderer::Initialize(int windowSizeX, int windowSizeY)
 
 	m_ParticleTexture = CreatePngTexture("./Textures/particle.png");
 	m_CatTexture = CreateBmpTexture("./Textures/cat.bmp");
+	m_RGBTexture = CreatePngTexture("./Textures/rgb.png");
 	//m_Particle1Texture = CreatePngTexture("./Textures/particle.png");
 	//m_Particle2Texture = CreatePngTexture("./Textures/particle.png");
 
@@ -844,7 +845,7 @@ void Renderer::DrawTextureRect(GLuint tex)
 	GLuint uTex = glGetUniformLocation(shader, "u_Texture");
 	glUniform1f(uTex, 0);
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, m_CatTexture);
+	glBindTexture(GL_TEXTURE_2D, m_RGBTexture);
 
 	GLuint aPos = glGetAttribLocation(shader, "a_Position");
 	GLuint aTex = glGetAttribLocation(shader, "a_Tex");
