@@ -112,13 +112,47 @@ void main()
 	FragColor = newColor;
 	*/
 
+    /*
+    //벽돌 과제1
 	vec2 newTex;
-	newTex.x = v_Tex.x*2 + 0.5;
-	newTex.y = v_Tex.y*2;
+    vec2 newnewTex;
+
+    newTex.x = v_Tex.x*2.0;
+    newTex.y = v_Tex.y*2.0;
+
+    newnewTex.x = newTex.x + floor(newTex.y)/2;
+    newnewTex.y = newTex.y;
 
 	vec4 newColor;
-	newColor = texture(uTexSampler, newTex);
+	newColor = texture(uTexSampler, newnewTex);
 
 	FragColor = newColor;
+    */
+
+    /*
+    //벽돌 과제2
+	vec2 newTex;
+    vec2 newnewTex;
+
+    newTex.x = v_Tex.x*2.0;
+    newTex.y = v_Tex.y*2.0;
+
+    newnewTex.x = newTex.x;
+    newnewTex.y = newTex.y + floor(newTex.x)/2;
+
+	vec4 newColor;
+	newColor = texture(uTexSampler, newnewTex);
+
+	FragColor = newColor;
+    */
+
+    vec2 newTex;
+    
+    newTex.x = v_Tex.x;
+    newTex.y = abs(1.0-v_Tex.y*2);
+
+    vec4 newColor = texture(uTexSampler, newTex);
+
+    FragColor = newColor;
 
 }
