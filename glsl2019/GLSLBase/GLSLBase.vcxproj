@@ -185,6 +185,8 @@
     <None Include="Shaders\SolidRect.vs" />
     <None Include="Shaders\TextureMapping.fs" />
     <None Include="Shaders\TextureMapping.vs" />
+    <None Include="Shaders\VSSandBox.fs" />
+    <None Include="Shaders\VSSandBox.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

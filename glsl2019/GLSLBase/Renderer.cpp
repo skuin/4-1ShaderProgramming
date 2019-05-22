@@ -28,9 +28,10 @@ void Renderer::Initialize(int windowSizeX, int windowSizeY)
 	m_FSSandboxShader = CompileShaders("./Shaders/FSSandbox.vs", "./Shaders/FSSandbox.fs");
 	m_FillAllShader = CompileShaders("./Shaders/FillAll.vs", "./Shaders/FillAll.fs");
 	m_TextureRectShader = CompileShaders("./Shaders/TextureMapping.vs", "./Shaders/TextureMapping.fs");
+	m_VSSandBoxShader = CompileShaders("./Shaders/VSSandBox.vs", "./Shaders/VSSandBox.fs");
 
 	m_ParticleTexture = CreatePngTexture("./Textures/particle.png");
-	m_CatTexture = CreateBmpTexture("./Textures/cat.bmp");
+	m_CatTexture = CreatePngTexture("./Textures/omg.png");
 	m_RGBTexture = CreatePngTexture("./Textures/rgb.png");
 	//m_Particle1Texture = CreatePngTexture("./Textures/particle.png");
 	//m_Particle2Texture = CreatePngTexture("./Textures/particle.png");
@@ -641,14 +642,25 @@ void Renderer::Lecture2()
 	glDisableVertexAttribArray(0);
 }
 
-void Renderer::Lecture3()
+void Renderer::VSSandBox()
 {
-	glUseProgram(m_SolidRectShader);
+	GLuint shader = m_VSSandBoxShader;
+	glUseProgram(shader);
+	static float gTime = 0.0f;
+	gTime += 0.05f;
+	GLuint uTime = glGetUniformLocation(shader, "u_Time");
+	glUniform1f(uTime, gTime);
 	glEnableVertexAttribArray(0);
+
+	GLuint uTex = glGetUniformLocation(shader, "u_Texture");
+	glUniform1f(uTex, 0);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, m_CatTexture);
+
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBOGridMesh);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);
 
-	glDrawArrays(GL_LINE_STRIP, 0, m_VBOGridMesh_Count);
+	glDrawArrays(GL_TRIANGLES, 0, m_VBOGridMesh_Count);
 
 	glDisableVertexAttribArray(0);
 }

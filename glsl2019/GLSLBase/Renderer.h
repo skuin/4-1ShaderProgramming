@@ -67,6 +67,7 @@ private:
 	GLuint m_SinTrailShader = 0;
 	GLuint m_FSSandboxShader = 0;
 	GLuint m_FillAllShader = 0;
+	GLuint m_VSSandBoxShader = 0;
 
 	//Textures
 	GLuint m_ParticleTexture = 0;
@@ -84,5 +85,6 @@ public:
 	void Lecture7();
 	void Lecture6();
 	void DrawTextureRect(GLuint tex);
+	void VSSandBox();
 };
 
