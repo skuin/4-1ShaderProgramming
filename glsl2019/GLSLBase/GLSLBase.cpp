@@ -29,12 +29,14 @@ void RenderScene(void)
 	// Renderer Test
 	//g_Renderer->Test();
 	//g_Renderer->Lecture2();
-	g_Renderer->VSSandBox();
+	//g_Renderer->VSSandBox();
 	//g_Renderer->Lecture4();
 	//g_Renderer->Lecture5();
 	//g_Renderer->Lecture6();
 	//g_Renderer->Lecture7();
 	//g_Renderer->DrawTextureRect(0);
+	g_Renderer->Cube();
+	//g_Renderer->FillAll(0);
 
 	glutSwapBuffers();
 }

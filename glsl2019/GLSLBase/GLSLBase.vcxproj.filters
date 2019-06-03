@@ -71,6 +71,12 @@
     <None Include="Shaders\VSSandBox.vs">
       <Filter>Shader</Filter>
     </None>
+    <None Include="Shaders\cube.fs">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shaders\cube.vs">
+      <Filter>Shader</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />

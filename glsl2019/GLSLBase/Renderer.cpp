@@ -29,6 +29,7 @@ void Renderer::Initialize(int windowSizeX, int windowSizeY)
 	m_FillAllShader = CompileShaders("./Shaders/FillAll.vs", "./Shaders/FillAll.fs");
 	m_TextureRectShader = CompileShaders("./Shaders/TextureMapping.vs", "./Shaders/TextureMapping.fs");
 	m_VSSandBoxShader = CompileShaders("./Shaders/VSSandBox.vs", "./Shaders/VSSandBox.fs");
+	m_CubeShader = CompileShaders("./Shaders/cube.vs", "./Shaders/cube.fs");
 
 	m_ParticleTexture = CreatePngTexture("./Textures/particle.png");
 	m_CatTexture = CreatePngTexture("./Textures/omg.png");
@@ -38,9 +39,25 @@ void Renderer::Initialize(int windowSizeX, int windowSizeY)
 
 	//Create VBOs
 	CreateVertexBufferObjects();
-
 	CreateTexture();
+	//InitMatrices();
 }
+
+void Renderer::InitMatrices()
+{
+	// Calc ortho projection matrix
+	m_OrthoProjMat4 = glm::ortho(-1.f, 1.f, -1.f, 1.f, 0.f, 2.f);
+
+	// Calc view matrix
+	m_CameraPosVec3 = glm::vec3(0.f, 0.f, 1.f);
+	m_CameraUpVec3 = glm::vec3(0.f, 1.f, 0.f);
+	m_CameraLookatVec3 = glm::vec3(0.f, 0.f, 0.f);
+	m_ViewMat4 = glm::lookAt(m_CameraPosVec3, m_CameraLookatVec3, m_CameraUpVec3);
+
+	m_ViewProjMat4 = m_OrthoProjMat4 * m_ViewMat4;
+	
+}
+
 
 void Renderer::CreateTexture()
 {
@@ -133,6 +150,67 @@ void Renderer::CreateVertexBufferObjects()
 	GenQuadsVBO(1000, false, &m_VBOQuads1, &m_VBOQuads_VertexCount1);
 	CreateGridMesh();
 }
+
+void Renderer::CreateSimpleCube()
+{
+	float temp = 0.5f;
+
+	float cube[] = {
+	-temp,-temp,-temp, -1.f, 0.f, 0.f, 1.f, 0.f, 0.f, 1.f, //x, y, z, nx, ny, nz, r, g, b, a
+	-temp,-temp, temp, -1.f, 0.f, 0.f, 1.f, 0.f, 0.f, 1.f,
+	-temp, temp, temp, -1.f, 0.f, 0.f, 1.f, 0.f, 0.f, 1.f,
+
+	temp, temp,-temp, 0.f, 0.f, -1.f, 0.f, 0.f, 1.f, 1.f,
+	-temp,-temp,-temp, 0.f, 0.f, -1.f, 0.f, 0.f, 1.f, 1.f,
+	-temp, temp,-temp, 0.f, 0.f, -1.f, 0.f, 0.f, 1.f, 1.f,
+
+	temp,-temp, temp, 0.f, -1.f, 0.f, 0.f, 1.f, 0.f, 1.f,
+	-temp,-temp,-temp, 0.f, -1.f, 0.f, 0.f, 1.f, 0.f, 1.f,
+	temp,-temp,-temp, 0.f, -1.f, 0.f, 0.f, 1.f, 0.f, 1.f,
+
+	temp, temp,-temp, 0.f, 0.f, -1.f, 0.f, 0.f, 1.f, 1.f,
+	temp,-temp,-temp, 0.f, 0.f, -1.f, 0.f, 0.f, 1.f, 1.f,
+	-temp,-temp,-temp, 0.f, 0.f, -1.f, 0.f, 0.f, 1.f, 1.f,
+
+	-temp,-temp,-temp, -1.f, 0.f, 0.f, 1.f, 0.f, 0.f, 1.f,
+	-temp, temp, temp, -1.f, 0.f, 0.f, 1.f, 0.f, 0.f, 1.f,
+	-temp, temp,-temp, -1.f, 0.f, 0.f, 1.f, 0.f, 0.f, 1.f,
+
+	temp,-temp, temp, 0.f, -1.f, 0.f, 0.f, 1.f, 0.f, 1.f,
+	-temp,-temp, temp, 0.f, -1.f, 0.f, 0.f, 1.f, 0.f, 1.f,
+	-temp,-temp,-temp, 0.f, -1.f, 0.f, 0.f, 1.f, 0.f, 1.f,
+
+	-temp, temp, temp, 0.f, 0.f, 1.f, 0.f, 0.f, 1.f, 1.f,
+	-temp,-temp, temp, 0.f, 0.f, 1.f, 0.f, 0.f, 1.f, 1.f,
+	temp,-temp, temp, 0.f, 0.f, 1.f, 0.f, 0.f, 1.f, 1.f,
+
+	temp, temp, temp, 1.f, 0.f, 0.f, 1.f, 0.f, 0.f, 1.f,
+	temp,-temp,-temp, 1.f, 0.f, 0.f, 1.f, 0.f, 0.f, 1.f,
+	temp, temp,-temp, 1.f, 0.f, 0.f, 1.f, 0.f, 0.f, 1.f,
+
+	temp,-temp,-temp, 1.f, 0.f, 0.f, 1.f, 0.f, 0.f, 1.f,
+	temp, temp, temp, 1.f, 0.f, 0.f, 1.f, 0.f, 0.f, 1.f,
+	temp,-temp, temp, 1.f, 0.f, 0.f, 1.f, 0.f, 0.f, 1.f,
+
+	temp, temp, temp, 0.f, 1.f, 0.f, 0.f, 1.f, 0.f, 1.f,
+	temp, temp,-temp, 0.f, 1.f, 0.f, 0.f, 1.f, 0.f, 1.f,
+	-temp, temp,-temp, 0.f, 1.f, 0.f, 0.f, 1.f, 0.f, 1.f,
+
+	temp, temp, temp, 0.f, 1.f, 0.f, 0.f, 1.f, 0.f, 1.f,
+	-temp, temp,-temp, 0.f, 1.f, 0.f, 0.f, 1.f, 0.f, 1.f,
+	-temp, temp, temp, 0.f, 1.f, 0.f, 0.f, 1.f, 0.f, 1.f,
+
+	temp, temp, temp, 0.f, 0.f, 1.f, 0.f, 0.f, 1.f, 1.f,
+	-temp, temp, temp, 0.f, 0.f, 1.f, 0.f, 0.f, 1.f, 1.f,
+	temp,-temp, temp, 0.f, 0.f, 1.f, 0.f, 0.f, 1.f, 1.f,
+	};
+
+	glGenBuffers(1, &m_VBO_Cube);
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBO_Cube);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(cube), cube, GL_STATIC_DRAW);
+
+}
+float g_Time = 0;
 
 void Renderer::GenQuadsVBO(int count, bool bRandPos, GLuint * id, GLuint * vCount)
 {
@@ -549,8 +627,6 @@ void Renderer::CreateGridMesh()
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float)*(pointCountX - 1)*(pointCountY - 1) * 2 * 3 * 3, vertices, GL_STATIC_DRAW);
 }
 
-
-
 GLuint Renderer::CreatePngTexture(char * filePath)
 {
 	//Load Pngs: Load file and decode image.
@@ -600,8 +676,6 @@ GLuint Renderer::CreateBmpTexture(char * filePath)
 	return temp;
 }
 
-float g_Time = 0.f;
-
 void Renderer::Test()
 {
 	glUseProgram(m_SolidRectShader);
@@ -644,6 +718,9 @@ void Renderer::Lecture2()
 
 void Renderer::VSSandBox()
 {
+	// 물결이 뻗어나오는 point
+	GLfloat points[] = { 0.0,0.0, 0.5,0.5, 0.3,0.3, -0.2,0.2, -0.3,-0.3 };
+
 	GLuint shader = m_VSSandBoxShader;
 	glUseProgram(shader);
 	static float gTime = 0.0f;
@@ -654,17 +731,22 @@ void Renderer::VSSandBox()
 
 	GLuint uTex = glGetUniformLocation(shader, "u_Texture");
 	glUniform1f(uTex, 0);
+	GLuint uPoints = glGetUniformLocation(shader, "u_Points");
+	glUniform2fv(uPoints, 5, points);
+
+	//GLuint projView = glGetUniformLocation(shader, "u_ProjView");
+	//glUniformMatrix4fv(projView, 1, GL_FALSE, &m_ViewProjMat4[0][0]);
+
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, m_CatTexture);
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBOGridMesh);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);
 
-	glDrawArrays(GL_TRIANGLES, 0, m_VBOGridMesh_Count);
+	glDrawArrays(GL_LINE_STRIP, 0, m_VBOGridMesh_Count);
 
 	glDisableVertexAttribArray(0);
 }
-
 void Renderer::Lecture4()
 {
 	glUseProgram(m_SimpleVelShader);
@@ -856,6 +938,7 @@ void Renderer::DrawTextureRect(GLuint tex)
 
 	GLuint uTex = glGetUniformLocation(shader, "u_Texture");
 	glUniform1f(uTex, 0);
+
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, m_RGBTexture);
 
@@ -874,4 +957,39 @@ void Renderer::DrawTextureRect(GLuint tex)
 
 	glDisableVertexAttribArray(aPos);
 	glDisableVertexAttribArray(aTex);
+}
+
+void Renderer::Cube()
+{	
+	CreateGridMesh();
+	GLuint shader = m_CubeShader;
+
+	glUseProgram(shader);
+
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LEQUAL);
+
+	GLuint projView = glGetUniformLocation(shader, "u_ProjView");
+
+	glUniformMatrix4fv(projView, 1, GL_FALSE, &m_ViewProjMat4[0][0]);
+
+	int attribPosition = glGetAttribLocation(shader, "a_Position");
+	int attribNormal = glGetAttribLocation(shader, "a_Normal");
+	int attribColor = glGetAttribLocation(shader, "a_Color");
+
+	glEnableVertexAttribArray(attribPosition);
+	glEnableVertexAttribArray(attribNormal);
+	glEnableVertexAttribArray(attribColor);
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBO_Cube);
+
+	glVertexAttribPointer(attribPosition, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 10, 0);
+	glVertexAttribPointer(attribNormal, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 10, (GLvoid*)(sizeof(float) * 3));
+	glVertexAttribPointer(attribColor, 4, GL_FLOAT, GL_FALSE, sizeof(float) * 10, (GLvoid*)(sizeof(float) * 6));
+
+	glDrawArrays(GL_TRIANGLES, 0, 36);
+
+	glDisableVertexAttribArray(attribPosition);
+	glDisableVertexAttribArray(attribNormal);
+	glDisableVertexAttribArray(attribColor);
 }

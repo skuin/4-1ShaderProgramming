@@ -10,5 +10,8 @@ in vec2 v_Tex;
 
 void main()
 {
-	FragColor = texture(u_Texture, v_Tex);
+    // ±ê¹ß ÆÞ·°ÀÌ´Â ½¦ÀÌ´õ
+	//FragColor = texture(u_Texture, vec2(v_Tex.x, v_Tex.y)) * v_Grey;
+
+    FragColor = vec4(1) * v_Grey ;
 }
