@@ -1,8 +1,11 @@
-#version 450
+#version 440
 
-layout(location = 0) in vec3 a_Position;
+in vec3 a_Position;
+
+
 
 void main()
 {
-	gl_Position = vec4(a_Position.xyz, 1);
+	
+	gl_Position = vec4(a_Position, 1);
 }

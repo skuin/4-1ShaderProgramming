@@ -173,20 +173,24 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Shaders\cube.fs" />
-    <None Include="Shaders\cube.vs" />
-    <None Include="Shaders\FillAll.fs" />
-    <None Include="Shaders\FillAll.vs" />
-    <None Include="Shaders\FSSandbox.fs" />
-    <None Include="Shaders\FSSandbox.vs" />
+    <None Include="Shaders\0401.fs" />
+    <None Include="Shaders\0401.vs" />
+    <None Include="Shaders\AnimShader.fs" />
+    <None Include="Shaders\AnimShader.vs" />
+    <None Include="Shaders\DrawNumberShader.fs" />
+    <None Include="Shaders\DrawNumberShader.vs" />
+    <None Include="Shaders\fillall.fs" />
+    <None Include="Shaders\fillall.vs" />
+    <None Include="Shaders\fragshad.fs" />
+    <None Include="Shaders\fragshad.vs" />
+    <None Include="Shaders\Otho.fs" />
+    <None Include="Shaders\Otho.vs" />
     <None Include="Shaders\SimpleVel.fs" />
     <None Include="Shaders\SimpleVel.vs" />
-    <None Include="Shaders\SinTrail.fs" />
-    <None Include="Shaders\SinTrail.vs" />
     <None Include="Shaders\SolidRect.fs" />
     <None Include="Shaders\SolidRect.vs" />
-    <None Include="Shaders\TextureMapping.fs" />
-    <None Include="Shaders\TextureMapping.vs" />
+    <None Include="Shaders\TexShader.fs" />
+    <None Include="Shaders\TexShader.vs" />
     <None Include="Shaders\VSSandBox.fs" />
     <None Include="Shaders\VSSandBox.vs" />
   </ItemGroup>

@@ -17,26 +17,34 @@ but WITHOUT ANY WARRANTY.
 
 Renderer *g_Renderer = NULL;
 
-int g_WindowSizeX = 700;
-int g_WindowSizeY = 700;
+int g_WindowSizeX = 500;
+int g_WindowSizeY = 500;
 
 void RenderScene(void)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+
 	//g_Renderer->FillAll(0.2);
 
 	// Renderer Test
 	//g_Renderer->Test();
 	//g_Renderer->Lecture2();
-	//g_Renderer->VSSandBox();
+	//g_Renderer->GenQuads();
+	//g_Renderer->Lecture3();
 	//g_Renderer->Lecture4();
-	//g_Renderer->Lecture5();
+	//g_Renderer->RandVel();
 	//g_Renderer->Lecture6();
-	//g_Renderer->Lecture7();
 	//g_Renderer->DrawTextureRect(0);
-	g_Renderer->Cube();
-	//g_Renderer->FillAll(0);
+	//int number[] = { 5, 6, 2 };
+	//g_Renderer->drawNumber(number);
+	/*static int ani = 0;
+	ani++;
+	g_Renderer->TextureAnim((int)(ani / 64));*/
+
+	g_Renderer->VSSandBox();
+
+	//g_Renderer->Cube();
 
 	glutSwapBuffers();
 }

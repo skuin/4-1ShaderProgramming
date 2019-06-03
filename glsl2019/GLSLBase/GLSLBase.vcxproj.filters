@@ -41,28 +41,40 @@
     <None Include="Shaders\SimpleVel.vs">
       <Filter>Shader</Filter>
     </None>
-    <None Include="Shaders\SinTrail.fs">
+    <None Include="Shaders\0401.fs">
       <Filter>Shader</Filter>
     </None>
-    <None Include="Shaders\SinTrail.vs">
+    <None Include="Shaders\0401.vs">
       <Filter>Shader</Filter>
     </None>
-    <None Include="Shaders\FSSandbox.fs">
+    <None Include="Shaders\fragshad.fs">
       <Filter>Shader</Filter>
     </None>
-    <None Include="Shaders\FSSandbox.vs">
+    <None Include="Shaders\fragshad.vs">
       <Filter>Shader</Filter>
     </None>
-    <None Include="Shaders\FillAll.fs">
+    <None Include="Shaders\fillall.fs">
       <Filter>Shader</Filter>
     </None>
-    <None Include="Shaders\FillAll.vs">
+    <None Include="Shaders\fillall.vs">
       <Filter>Shader</Filter>
     </None>
-    <None Include="Shaders\TextureMapping.fs">
+    <None Include="Shaders\TexShader.fs">
       <Filter>Shader</Filter>
     </None>
-    <None Include="Shaders\TextureMapping.vs">
+    <None Include="Shaders\TexShader.vs">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shaders\DrawNumberShader.fs">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shaders\DrawNumberShader.vs">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shaders\AnimShader.fs">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shaders\AnimShader.vs">
       <Filter>Shader</Filter>
     </None>
     <None Include="Shaders\VSSandBox.fs">
@@ -71,10 +83,10 @@
     <None Include="Shaders\VSSandBox.vs">
       <Filter>Shader</Filter>
     </None>
-    <None Include="Shaders\cube.fs">
+    <None Include="Shaders\Otho.fs">
       <Filter>Shader</Filter>
     </None>
-    <None Include="Shaders\cube.vs">
+    <None Include="Shaders\Otho.vs">
       <Filter>Shader</Filter>
     </None>
   </ItemGroup>
