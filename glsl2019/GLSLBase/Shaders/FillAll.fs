@@ -9,11 +9,9 @@ uniform float u_Time;
 uniform vec2 u_Points[5];
 
 
-
-void main()
+void Rader()
 {
-
-	vec2 newUV = v_Temp.xy - vec2(0.5, 0.5); // 0, 0 ~ 1, 1
+    vec2 newUV = v_Temp.xy - vec2(0.5, 0.5); // 0, 0 ~ 1, 1
 
 	float pointGrey = 0;
 
@@ -39,4 +37,26 @@ void main()
 
 	}
 	FragColor = vec4(pointGrey);
+}
+
+void Waves()
+{
+    vec4 newColor = vec4(0);
+    vec2 newUV = v_Temp.xy - vec2(0.5, 0.5); // 0, 0 ~ 1, 1
+
+    for(int i = 0 ;i < 5; ++i)
+    {
+		vec2 newPoint = u_Points[i];
+		vec2 newVec = newPoint - newUV;
+		float distance = length(newVec) * 8 * 3.141592 - u_Time;
+        newColor += vec4(sin(distance));
+	}
+    FragColor = newColor;
+}
+
+void main()
+{
+    //Rader()
+    Waves();
+	
 }

@@ -26,7 +26,7 @@ void Renderer::Initialize(int windowSizeX, int windowSizeY)
 	//Load shaders
 	//m_Lecture6Shader = CompileShaders("./Shaders/0401.vs", "./Shaders/0401.fs");
 	//m_FragShader = CompileShaders("./Shaders/fragshad.vs", "./Shaders/fragshad.fs");
-	//m_FillAllShader = CompileShaders("./Shaders/fillall.vs", "./Shaders/fillall.fs");
+	m_FillAllShader = CompileShaders("./Shaders/fillall.vs", "./Shaders/fillall.fs");
 	m_TextureRectShader = CompileShaders("./Shaders/TexShader.vs", "./Shaders/TexShader.fs");
 	m_DrawNumberShader = CompileShaders("./Shaders/DrawNumberShader.vs", "./Shaders/DrawNumberShader.fs");
 	m_AnimShader = CompileShaders("./Shaders/AnimShader.vs", "./Shaders/AnimShader.fs");
@@ -728,8 +728,8 @@ void Renderer::CreateGridMesh()
 	float targetPosX = 0.5f;
 	float targetPosY = 0.5f;
 
-	int pointCountX = 32;
-	int pointCountY = 32;
+	int pointCountX = 100;
+	int pointCountY = 100;
 
 	float width = targetPosX - basePosX;
 	float height = targetPosY - basePosY;
@@ -800,13 +800,14 @@ void Renderer::CreateGridMesh()
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float)*(pointCountX - 1)*(pointCountY - 1) * 2 * 3 * 3, vertices, GL_STATIC_DRAW);
 }
 
+//float g_Time = 0.0;
 
 void Renderer::InitMatrices()
 {
 	m_OrthoProjMat4 = glm::ortho(-1.f, 1.f, -1.f, 1.f, 0.f, 2.f);
 	m_PersProjMat4 = glm::perspective(3.141592f*0.5f, 1.f, 0.001f, 100.f);
 
-	m_CameraPosVec3 = glm::vec3(0.f, -1.f, 0.2f);
+	m_CameraPosVec3 = glm::vec3(0.7f, -0.7f, 0.5f);
 	m_CameraUpVec3 = glm::vec3(0.f, 0.f, 1.f);
 	m_CameraLookatVec3 = glm::vec3(0.f, 0.f, 0.f);
 	m_ViewMat4 = glm::lookAt(m_CameraPosVec3, m_CameraLookatVec3, m_CameraUpVec3);
@@ -1198,6 +1199,7 @@ void Renderer::VSSandBox()
 	GLuint uTime = glGetUniformLocation(m_VSSandBoxShader, "u_Time");
 	glUniform1f(uTime, g_Time);
 	g_Time += 0.005f;
+	if (g_Time == 1.f) g_Time = 0.f;
 
 	GLuint uViewProjMat = glGetUniformLocation(m_VSSandBoxShader, "u_ViewProjMat");
 	glUniformMatrix4fv(uViewProjMat, 1, GL_FALSE, &m_ViewProjMat4[0][0]);

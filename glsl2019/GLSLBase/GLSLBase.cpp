@@ -43,6 +43,7 @@ void RenderScene(void)
 	g_Renderer->TextureAnim((int)(ani / 64));*/
 
 	g_Renderer->VSSandBox();
+	//g_Renderer->FillAll(0);
 
 	//g_Renderer->Cube();
 
