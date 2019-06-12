@@ -17,35 +17,35 @@ but WITHOUT ANY WARRANTY.
 
 Renderer *g_Renderer = NULL;
 
-int g_WindowSizeX = 500;
-int g_WindowSizeY = 500;
+int g_WindowSizeX = 1024;
+int g_WindowSizeY = 1024;
 
 void RenderScene(void)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	//g_Renderer->FillAll(0.2);
 
 	// Renderer Test
 	//g_Renderer->Test();
 	//g_Renderer->Lecture2();
-	//g_Renderer->GenQuads();
 	//g_Renderer->Lecture3();
 	//g_Renderer->Lecture4();
-	//g_Renderer->RandVel();
-	//g_Renderer->Lecture6();
+	//g_Renderer->Lecture5();
+	//g_Renderer->Lecture6(); //ok
+	//g_Renderer->Lecture7(); //ok
+	/*static int gAnimNum = 0;
+	gAnimNum++;
+	if (gAnimNum > 6)
+		gAnimNum = 0;
+	g_Renderer->DrawSpriteSequence(gAnimNum); //ok*/
+	//g_Renderer->VSSandbox(); //ok
+
 	//g_Renderer->DrawTextureRect(0);
 	//int number[] = { 5, 6, 2 };
-	//g_Renderer->drawNumber(number);
-	/*static int ani = 0;
-	ani++;
-	g_Renderer->TextureAnim((int)(ani / 64));*/
-
-	g_Renderer->VSSandBox();
-	//g_Renderer->FillAll(0);
-
-	//g_Renderer->Cube();
+	//g_Renderer->DrawNumber(number);
+	//g_Renderer->DrawTextureRect(0, -0.8, -0.8, 0.4, 0.4);
+	g_Renderer->TestFBO2();
 
 	glutSwapBuffers();
 }

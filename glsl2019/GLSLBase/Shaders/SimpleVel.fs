@@ -1,9 +1,8 @@
-#version 440
+#version 450
 
 layout(location=0) out vec4 FragColor;
 
-
 void main()
 {
-	FragColor = vec4(1,1,1,1);
+	FragColor = vec4(0,1,0,1);
 }

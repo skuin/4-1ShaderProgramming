@@ -173,26 +173,26 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Shaders\0401.fs" />
-    <None Include="Shaders\0401.vs" />
-    <None Include="Shaders\AnimShader.fs" />
-    <None Include="Shaders\AnimShader.vs" />
-    <None Include="Shaders\DrawNumberShader.fs" />
-    <None Include="Shaders\DrawNumberShader.vs" />
-    <None Include="Shaders\fillall.fs" />
-    <None Include="Shaders\fillall.vs" />
-    <None Include="Shaders\fragshad.fs" />
-    <None Include="Shaders\fragshad.vs" />
-    <None Include="Shaders\Otho.fs" />
-    <None Include="Shaders\Otho.vs" />
+    <None Include="Shaders\DrawNumber.fs" />
+    <None Include="Shaders\DrawNumber.vs" />
+    <None Include="Shaders\FillAll.fs" />
+    <None Include="Shaders\FillAll.vs" />
+    <None Include="Shaders\FSSandbox.fs" />
+    <None Include="Shaders\FSSandbox.vs" />
+    <None Include="Shaders\HDRTextureRect.fs" />
+    <None Include="Shaders\HDRTextureRect.vs" />
     <None Include="Shaders\SimpleVel.fs" />
     <None Include="Shaders\SimpleVel.vs" />
+    <None Include="Shaders\SinTrail.fs" />
+    <None Include="Shaders\SinTrail.vs" />
     <None Include="Shaders\SolidRect.fs" />
     <None Include="Shaders\SolidRect.vs" />
-    <None Include="Shaders\TexShader.fs" />
-    <None Include="Shaders\TexShader.vs" />
-    <None Include="Shaders\VSSandBox.fs" />
-    <None Include="Shaders\VSSandBox.vs" />
+    <None Include="Shaders\SpriteAnim.fs" />
+    <None Include="Shaders\SpriteAnim.vs" />
+    <None Include="Shaders\TextureRect.fs" />
+    <None Include="Shaders\TextureRect.vs" />
+    <None Include="Shaders\VSSandbox.fs" />
+    <None Include="Shaders\VSSandbox.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

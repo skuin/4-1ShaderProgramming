@@ -41,52 +41,52 @@
     <None Include="Shaders\SimpleVel.vs">
       <Filter>Shader</Filter>
     </None>
-    <None Include="Shaders\0401.fs">
+    <None Include="Shaders\SinTrail.fs">
       <Filter>Shader</Filter>
     </None>
-    <None Include="Shaders\0401.vs">
+    <None Include="Shaders\SinTrail.vs">
       <Filter>Shader</Filter>
     </None>
-    <None Include="Shaders\fragshad.fs">
+    <None Include="Shaders\FSSandbox.fs">
       <Filter>Shader</Filter>
     </None>
-    <None Include="Shaders\fragshad.vs">
+    <None Include="Shaders\FSSandbox.vs">
       <Filter>Shader</Filter>
     </None>
-    <None Include="Shaders\fillall.fs">
+    <None Include="Shaders\FillAll.fs">
       <Filter>Shader</Filter>
     </None>
-    <None Include="Shaders\fillall.vs">
+    <None Include="Shaders\FillAll.vs">
       <Filter>Shader</Filter>
     </None>
-    <None Include="Shaders\TexShader.fs">
+    <None Include="Shaders\TextureRect.fs">
       <Filter>Shader</Filter>
     </None>
-    <None Include="Shaders\TexShader.vs">
+    <None Include="Shaders\TextureRect.vs">
       <Filter>Shader</Filter>
     </None>
-    <None Include="Shaders\DrawNumberShader.fs">
+    <None Include="Shaders\DrawNumber.fs">
       <Filter>Shader</Filter>
     </None>
-    <None Include="Shaders\DrawNumberShader.vs">
+    <None Include="Shaders\DrawNumber.vs">
       <Filter>Shader</Filter>
     </None>
-    <None Include="Shaders\AnimShader.fs">
+    <None Include="Shaders\SpriteAnim.fs">
       <Filter>Shader</Filter>
     </None>
-    <None Include="Shaders\AnimShader.vs">
+    <None Include="Shaders\SpriteAnim.vs">
       <Filter>Shader</Filter>
     </None>
-    <None Include="Shaders\VSSandBox.fs">
+    <None Include="Shaders\VSSandbox.fs">
       <Filter>Shader</Filter>
     </None>
-    <None Include="Shaders\VSSandBox.vs">
+    <None Include="Shaders\VSSandbox.vs">
       <Filter>Shader</Filter>
     </None>
-    <None Include="Shaders\Otho.fs">
+    <None Include="Shaders\HDRTextureRect.fs">
       <Filter>Shader</Filter>
     </None>
-    <None Include="Shaders\Otho.vs">
+    <None Include="Shaders\HDRTextureRect.vs">
       <Filter>Shader</Filter>
     </None>
   </ItemGroup>

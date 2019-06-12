@@ -1,143 +1,148 @@
-#version 440
+#version 450
 
-in vec3 a_Position;
-
-const float PI = 3.141592;
+layout(location = 0) in vec3 a_Position;
+const float PI = 3.14592;
 
 uniform float u_Time;
+uniform vec2 u_Points[5];
+uniform mat4 u_ViewProjMat;
+uniform sampler2D u_heightMapTexture;
 
 out float v_Grey;
 out vec2 v_Tex;
 out vec3 v_Norm;
 out vec3 v_Pos;
 
-uniform mat4 u_ViewProjMat;
-
-uniform vec2 u_Points[5];
-
-uniform sampler2D u_Texture;
-uniform sampler2D u_heightMapTexture;
-
-void flag()
+void Flag()
 {
 	vec3 newPos = a_Position;
-
-	float additionalValueX = newPos.x + 0.5;
-	float additionalValueY = newPos.y + 0.5;
-
-	float periodX = 1.0 + (1.0  - additionalValueY) * 0.5;
+	
+	//0~1
+	float additionalValueX = newPos.x + 0.5; //0~1
+	float additionalValueY = newPos.y + 0.5; //0~1
+	
+	float periodX = 1.0 + (1.0 - additionalValueY) * 0.5;
 	float periodY = 1.0 + additionalValueX * 0.5;
-
-	float valueX = (additionalValueY * 2 * PI * periodX) - u_Time *12.0;
-	float valueY = (additionalValueX * 2 * PI * periodY) - u_Time * 5.0;
+	
+	//x :: -0.5~0.5 --> +0.5 -> 0~1 -> * 2 * PI -> 0~2PI
+	float valueX = (additionalValueY * 2 * PI * periodX) - u_Time*12.0;
+	float valueY = (additionalValueX * 2 * PI  * periodY) - u_Time*5.0;
 
 	float sinValueX = sin(valueX) * 0.08;
 	float sinValueY = sin(valueY) * 0.2;
 
 	//y scale
-	newPos.y = newPos.y * ((1.0 - additionalValueX) * 0.3 + 0.7);
+	newPos.y = newPos.y * ((1.0 - additionalValueX)*0.5 + 0.5);
 
+	//x 
 	newPos.x = newPos.x - sinValueX * additionalValueX;
+	//y 
 	newPos.y = newPos.y + sinValueY * additionalValueX;
 
-	newPos.y *= 1.0 - (additionalValueX * 0.5);
+	//gl_Position = vec4(newPos.xyz, 1);
+	gl_Position = u_ViewProjMat * vec4(newPos.xyz, 1.0);
 
-	//gl_Position = vec4(newPos, 1.0);
-	gl_Position = vec4(newPos.xyz, 1.0) * u_ViewProjMat;
-
-	v_Grey = sinValueX + 0.5;
-
-	v_Tex = vec2(0.5, 0.5) + a_Position.xy;
-
+	v_Grey = sinValueY + 0.5;
+	v_Tex = vec2(0.5, 0.5) + a_Position.xy; //0~1, 0~1 tex coordinate
 }
 
 void Wave()
 {
-	vec3 newPos = a_Position.xyz;
 	float grey = 0.0;
-	float period = 3;
+	vec3 newPos = a_Position.xyz;
 
-	for(int i = 0; i < 5; i++)
+	for(int i=0; i<5; i++)
 	{
 		vec2 target;
-		vec2 source = u_Points[i];
+		vec2 source;
 		target = a_Position.xy;
-		//source = vec2(0.0, 0.0);
-
-		float distance = length(target - source) * 4.0 * PI * period;
-
-		grey += sin(distance - u_Time);
+		source = u_Points[i];
+		float dis = length(target - source) * 4 * PI * float(i); //0~0.5 --> 0~2PI
+		grey += sin(dis - u_Time);
 	}
-	v_Grey = (grey + 1.0) / 2.0;
+
+	newPos.z += grey*0.01;
+
+	//gl_Position = vec4(newPos.xyz, 1);
+	gl_Position = u_ViewProjMat * vec4(newPos.xyz, 1.0);
+
+	v_Grey = (grey + 1.0)/2.0;
 	v_Tex = vec2(0.5, 0.5) + a_Position.xy;
-
-	newPos.z += grey * 0.03;
-
-	//gl_Position = vec4(newPos, 1);
-	gl_Position = vec4(newPos, 1.0) * u_ViewProjMat;
 }
 
-void Sphere()
+void SphereMapping()
 {
-	float newTime = sin(u_Time) * 0.5 + 0.5;
+	float grey = 0.0;
+	vec3 newPos = a_Position.xyz;
 
-	float r = 0.8;
-	float beta = (a_Position.x  + 0.5) * 2 * PI;//0 - PI
-	float theta = (a_Position.y + 0.5) * PI;//0 - PI
-	vec3 SpherePos;
+	for(int i=0; i<2; i++)
+	{
+		vec2 target;
+		vec2 source;
+		target = a_Position.xy;
+		source = u_Points[i];
+		float dis = length(target - source) * 4 * PI * float(2); //0~0.5 --> 0~2PI
+		grey += sin(dis - u_Time);
+	}
 
-	SpherePos = vec3
-	(
+	float r = (grey)*0.1;
+	float beta = (a_Position.x + 0.5) * 2 * PI;
+	float theta = (a_Position.y + 0.5) * PI;
+	vec3 spherePos = a_Position.xyz;
+	
+	spherePos = vec3(
 		r * sin(theta) * cos(beta),
 		r * sin(theta) * sin(beta),
 		r * cos(theta)
 	);
+	
+	//gl_Position = vec4(spherePos.xyz, 1);
+	gl_Position = u_ViewProjMat * vec4(spherePos.xyz, 1.0);
 
-	vec3 final = mix(a_Position.xyz, SpherePos, newTime);
-	v_Grey = 1.0;
-	gl_Position = vec4(final.xyz, 1);
+	v_Grey = abs(r);
 }
 
 void Proj()
 {
-	gl_Position = vec4(a_Position, 1.0) * u_ViewProjMat;
-	v_Grey = 1.0;
+	gl_Position = u_ViewProjMat * vec4(a_Position, 1.0);
+	v_Grey = 1;
 }
 
 void HeightMap()
 {
 	float gap = 2.0/100.0;
 
-	vec2 newUV = a_Position.xy + vec2(0.5, 0.5);
-	vec2 newUVRight = a_Position.xy + vec2(0.5, 0.5) + vec2(gap, 0.0);
-	vec2 newUVUp = a_Position.xy + vec2(0.5, 0.5) + vec2(0.0, gap);
+	vec3 newPos = a_Position.xyz;// + vec3(u_Time/20.0, 0.0, 0.0);
 
-	// 버텍스 쉐이더에서 텍스쳐 샘플링을해서 하이트맵을 넣는다.
+	vec2 newUV = newPos.xy + vec2(0.5, 0.5); //0~1
+	vec2 newUVRight = newPos.xy + vec2(0.5, 0.5) + vec2(gap, 0.0); //0~1
+	vec2 newUVUp = newPos.xy + vec2(0.5, 0.5) + vec2(0.0, gap); //0~1
+
 	float height = texture(u_heightMapTexture, newUV).r;
 	float heightRight = texture(u_heightMapTexture, newUVRight).r;
-	float heightUP = texture(u_heightMapTexture, newUVUp).r;
+	float heightUp = texture(u_heightMapTexture, newUVUp).r;
 
-	vec3 newPos = vec3(a_Position.xy, a_Position.z + height * 0.5);
-	vec3 newPosRight = vec3(a_Position.xy + vec2(gap, 0.0), a_Position.z + heightRight * 0.5);
-	vec3 newPosUp = vec3(a_Position.xy + vec2(0.0, gap), a_Position.z + heightUP * 0.5);
+	vec3 newPosCenter = vec3(a_Position.xy, a_Position.z + height*0.2);
+	vec3 newPosRight = vec3(a_Position.xy + vec2(gap, 0.0), a_Position.z + heightRight*0.2);
+	vec3 newPosUp = vec3(a_Position.xy + vec2(0.0, gap), a_Position.z + heightUp*0.2);
 
-	vec3 diff1 = newPosRight - newPos;
-	vec3 diff2 = newPosUp - newPos;
+	vec3 diff1 = newPosRight - newPosCenter;
+	vec3 diff2 = newPosUp - newPosCenter;
 
 	vec3 norm = cross(diff1, diff2);
 
-	gl_Position = u_ViewProjMat * vec4(newPos,1.0);
-	v_Grey = height;
+	gl_Position = u_ViewProjMat * vec4(newPosCenter, 1.0);
+	v_Grey = height; 
 	v_Tex = newUV;
 	v_Norm = normalize(norm);
-	v_Pos = newPos;
+	v_Pos = newPosCenter;
 }
+
 void main()
 {
+	//Flag();
 	//Wave();
-	//Sphere();
+	//SphereMapping();
 	//Proj();
-	//flag();
-
 	HeightMap();
 }

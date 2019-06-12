@@ -23,37 +23,21 @@ public:
 	void Test();
 	void Lecture2();
 	void Lecture3();
-	void GenQuadsVBO(int count);
-	void GenRandVelQuadsVBO(int count, bool bRandPos, GLuint *VBOquads, GLuint *vertexCounts);
-	void GenFragVBO(int count, bool bRandPos, GLuint *VBOquads, GLuint *vertexCounts);
-	void GenSineParticle();
-	void GenQuads();
 	void Lecture4();
-	void Lecture6();
-	void Lecture7();//fragment shader
-	void RandVel();
-	void TextureAnim(int number);
-	void drawNumber(int * number);
-	void DrawTextureRect(GLuint tex);
-	void VSSandBox();
-
-	void FillAll(float alpha);
-
-	void CreateTextures();
-	void SimpleCube();
-	void Cube();
-	void InitMatrices();
+	void Lecture5();
 
 private:
-	void CreateGridMesh();
-
 	void Initialize(int windowSizeX, int windowSizeY);
 	bool ReadFile(char* filename, std::string *target);
 	void AddShader(GLuint ShaderProgram, const char* pShaderText, GLenum ShaderType);
 	GLuint CompileShaders(char* filenameVS, char* filenameFS);
-	void CreateVertexBufferObjects(); 
-	unsigned char * Renderer::loadBMPRaw(const char * imagepath, unsigned int& outWidth, unsigned int& outHeight);
+	void CreateVertexBufferObjects();
+	void CreateTextures();
+	void GenQuadsVBO(int count, bool bRandPos, GLuint * id, GLuint * vCount);
+	void CreateGridMesh();
+	void BindNumberTextures();
 
+	unsigned char * Renderer::loadBMPRaw(const char * imagepath, unsigned int& outWidth, unsigned int& outHeight);
 
 	bool m_Initialized = false;
 	
@@ -61,64 +45,78 @@ private:
 	unsigned int m_WindowSizeY = 0;
 
 	GLuint m_VBORect = 0;
-	GLuint m_VBOTri = 0;
-	GLuint m_VBOQuads = 0;
-	GLuint M_VBOTextureRect = 0;
-	GLuint gTextureID = 0;
-	GLuint m_VBO_Cube = 0;
+	GLuint m_VBORectColor = 0;
 
+	GLuint m_VBOLecture = 0;
+	GLuint m_VBOQuads = 0;
+	GLuint m_VBOQuads_VertexCount = 0;
+	GLuint m_VBOQuads1 = 0;
+	GLuint m_VBOQuads_VertexCount1 = 0;
+	GLuint m_VBOGridMesh = 0;
+	int m_VBOGridMesh_Count = 0;
+	GLuint m_VBOTextureRect = 0;
+
+	//Shaders
 	GLuint m_SolidRectShader = 0;
-	GLuint m_SimplevelShader = 0;
-	GLuint m_Lecture6Shader = 0;
-	GLuint m_FragShader = 0;
+	GLuint m_SimpleVelShader = 0;
+	GLuint m_SinTrailShader = 0;
+	GLuint m_FSSandboxShader = 0;
 	GLuint m_FillAllShader = 0;
 	GLuint m_TextureRectShader = 0;
 	GLuint m_DrawNumberShader = 0;
-	GLuint m_AnimShader = 0;
-	GLuint m_VSSandBoxShader = 0;
-	GLuint m_OthoShader = 0;
+	GLuint m_SpriteAnimShader = 0;
+	GLuint m_VSSandboxShader = 0;
+	GLuint m_HDRTextureRectShader = 0;
 
-	GLuint m_VBORectColor = 0;
-
+	//Textures
 	GLuint m_ParticleTexture = 0;
-	GLuint m_ParticleTexture1 = 0;
-
-	GLuint m_ParticleTexture2 = 0;
-
-	GLuint m_checkerboardTexture = 0;
+	GLuint m_Particle1Texture = 0;
+	GLuint m_Particle2Texture = 0;
+	GLuint m_CheckerboardTexture = 0;
+	GLuint m_PororoTexture = 0;
 	GLuint m_RGBTexture = 0;
-	GLuint m_HeightMapTexture = 0;
-
-	GLuint m_0Texture = 0;
-	GLuint m_1Texture = 0;
-	GLuint m_2Texture = 0;
-	GLuint m_3Texture = 0;
-	GLuint m_WalkTexture = 0;
-
-	GLuint m_GrassTexture = 0;
+	GLuint m_NumberTexture[10] = { 0, };
+	GLuint m_NumbersTexture = 0;
+	GLuint m_SpriteAnimWalkTexture = 0;
+	GLuint m_TwiceTexture = 0;
+	GLuint m_HeightTexture = 0;
 	GLuint m_SnowTexture = 0;
+	GLuint m_GrassTexture = 0;
+	GLuint m_FBOTexture0 = 0;
+	GLuint m_FBOTexture1 = 0;
+	GLuint m_FBOTexture2 = 0;
+	GLuint m_FBOTexture3 = 0;
+	GLuint m_DepthRenderBuffer = 0;
 
-	GLuint m_NumberTexture = 0;
-	GLuint m_ThanosTexture = 0;
-
-
-	float g_Time = 0.f;
-	bool u_Repeat = 0.f;
-
-	glm::mat4 m_PersProjMat4;
-	glm::mat4 m_ViewProjMat4;
+	//Matrices
 	glm::mat4 m_ViewMat4;
 	glm::mat4 m_OrthoProjMat4;
+	glm::mat4 m_PersProjMat4;
+	glm::mat4 m_ViewProjMat4;
 	glm::vec3 m_CameraPosVec3;
-	glm::vec3 m_CameraLookatVec3;
 	glm::vec3 m_CameraUpVec3;
+	glm::vec3 m_CameraLookatVec3;
 
+	//FrameBufferObjects
+	GLuint m_FBO0 = 0;
+	GLuint m_FBO1 = 0;
+	GLuint m_FBO2 = 0;
+	GLuint m_FBO3 = 0;
+		
+	float g_Time = 0.f;
 
-	unsigned int m_VBOQuads_VertexCount;
-
-	GLuint m_VBOGridMesh = 0;
-	int m_VBOGridMesh_Count = 0;
-
-
+public:
+	void Lecture7();
+	void Lecture6();
+	void FillAll(float alpha);
+	void DrawTextureRect(GLuint tex, float x, float y, float sx, float sy);
+	void DrawHDRTextureRect(GLuint tex, float x, float y, float sx, float sy);
+	void DrawNumber(int * number);
+	void DrawSpriteSequence(GLuint number);
+	void VSSandbox();
+	void InitMatrices();
+	GLuint CreateFBO(int sx, int sy, GLuint *tex, bool isHDR);
+	void TestFBO();
+	void TestFBO2();
 };
 
